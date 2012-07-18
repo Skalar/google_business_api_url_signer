@@ -37,25 +37,40 @@ module GoogleBusinessApiUrlSigner
       )
     end
 
+
+
     def parsed_url
       @parsed_url ||= URI(url)
     end
 
     def path_and_query
-      [parsed_url.path, parsed_url.query].join '?'
+      [parsed_url.path, query_params_as_string].join '?'
     end
 
+
+
     def query_params
-      Hash[parsed_url.query.split('&').collect { |key_value| key_value.split('=')}]
+      return @query_params if @query_params
+
+      @query_params = Hash[(parsed_url.query || '').split('&').collect { |key_value| key_value.split('=')}]
+
+      fail MissingClientIdError if @query_params['client'].blank?
+      fail UrlAlreadySignedError if @query_params['signature'].present?
+
+      @query_params
+    end
+
+    def query_params_as_string(params = nil)
+      (params || query_params).to_a.collect { |pair| pair.join('=') }.join('&')
     end
 
     def query_params_as_string_with_signature
-      params = query_params.update(
-        signature: signature
+      query_params_as_string(
+        query_params.update(signature: signature)
       )
-
-      params.to_a.collect {|pair| pair.join('=')}.join('&')
     end
+
+
 
     def private_key_decoded
       Base64.decode64 private_key.tr('-_', '+/')

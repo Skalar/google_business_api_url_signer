@@ -17,4 +17,17 @@ describe GoogleBusinessApiUrlSigner::Signer do
   its(:private_key) { should eq private_key }
   its(:signature) { should eq signature }
   its(:signed_url) { should eq signed_url }
+
+
+  it "ensures that the URL contains a client id" do
+    expect {
+      described_class.new(url: '', private_key: '').signature
+    }.to raise_error GoogleBusinessApiUrlSigner::MissingClientIdError
+  end
+
+  it "ensures that no signature exists within the URL" do
+    expect {
+      described_class.new(url: signed_url, private_key: '').signature
+    }.to raise_error GoogleBusinessApiUrlSigner::UrlAlreadySignedError
+  end
 end

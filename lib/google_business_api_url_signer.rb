@@ -1,4 +1,6 @@
+require 'active_support/all'
 require "google_business_api_url_signer/version"
+require "google_business_api_url_signer/errors"
 require "google_business_api_url_signer/signer"
 
 module GoogleBusinessApiUrlSigner
