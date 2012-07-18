@@ -3,15 +3,18 @@ require 'openssl'
 
 module GoogleBusinessApiUrlSigner
   class Signer
+    cattr_accessor :default_private_key
     attr_reader :url, :private_key
 
     # Public: Initializes the signer
     #
-    # options   - Both url and private_key must be given within the options
+    # options   - url must be given within the options,
+    #             private_key can be given, or you can set default value with:
+    #             GoogleBusinessApiUrlSigner::Signer.default_private_key = 'key'
     #
     def initialize(options = {})
       @url = options.fetch :url
-      @private_key = options.fetch :private_key
+      @private_key = options.fetch :private_key, default_private_key
     end
 
 

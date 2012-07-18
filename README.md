@@ -20,6 +20,13 @@ And then execute:
     GoogleBusinessApiUrlSigner.add_signature(url, private_key)
     => "http://maps.googleapis.com/maps/api/geocode/json?address=New+York&sensor=false&client=clientID&signature=KrU1TzVQM7Ur0i8i7K3huiw3MsA="
 
+
+The private key may also be set as a default value on the Signer class,
+in which case you don't have to give it when calling `add_signature`.
+
+    GoogleBusinessApiUrlSigner::Signer.default_private_key = 'my-default-private-key-here'
+
+
 ## Contributing
 
 1. Fork it

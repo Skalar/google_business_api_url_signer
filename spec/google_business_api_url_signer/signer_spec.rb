@@ -18,7 +18,6 @@ describe GoogleBusinessApiUrlSigner::Signer do
   its(:signature) { should eq signature }
   its(:signed_url) { should eq signed_url }
 
-
   it "ensures that the URL contains a client id" do
     expect {
       described_class.new(url: '', private_key: '').signature
@@ -29,5 +28,17 @@ describe GoogleBusinessApiUrlSigner::Signer do
     expect {
       described_class.new(url: signed_url, private_key: '').signature
     }.to raise_error GoogleBusinessApiUrlSigner::UrlAlreadySignedError
+  end
+
+
+  describe "default private key" do
+    after { described_class.default_private_key = nil }
+
+    it "uses default private key when set" do
+      described_class.default_private_key = 'default'
+
+      Base64.should_receive(:decode64).with('default').and_return 'decoded'
+      described_class.new(url: url).signature
+    end
   end
 end
