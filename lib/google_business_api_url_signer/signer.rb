@@ -3,6 +3,8 @@ require 'openssl'
 
 module GoogleBusinessApiUrlSigner
   class Signer
+    BASE_64_DECODE_ENCODE_REPLACEMENTS = ['-_', '+/']
+
     cattr_accessor :default_private_key
     attr_reader :url, :private_key
 
@@ -20,7 +22,7 @@ module GoogleBusinessApiUrlSigner
 
     # Public: Calculates the signature from the given URL and private key
     def signature
-      Base64.encode64(signature_digest).tr('+/', '-_').chomp
+      Base64.encode64(signature_digest).tr(*BASE_64_DECODE_ENCODE_REPLACEMENTS.reverse).chomp
     end
 
     # Public: Calculates the signature and returns a signed version of the URL
@@ -83,7 +85,7 @@ module GoogleBusinessApiUrlSigner
 
 
     def private_key_decoded
-      Base64.decode64 private_key.tr('-_', '+/')
+      Base64.decode64 private_key.tr(*BASE_64_DECODE_ENCODE_REPLACEMENTS)
     end
   end
 end
