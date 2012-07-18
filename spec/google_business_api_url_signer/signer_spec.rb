@@ -16,4 +16,5 @@ describe GoogleBusinessApiUrlSigner::Signer do
   its(:url) { should eq url }
   its(:private_key) { should eq private_key }
   its(:signature) { should eq signature }
+  its(:signed_url) { should eq signed_url }
 end
