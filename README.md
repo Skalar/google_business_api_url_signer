@@ -1,24 +1,24 @@
-# GoogleBusinessApiUrlSigner
+# Google Business Api Url Signer
 
-TODO: Write a gem description
+Signs URLs used to call Google's business APIs.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'google_business_api_url_signer'
+    gem 'google_business_api_url_signer', git: 'git://github.com/Skalar/google_business_api_url_signer.git'
+
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install google_business_api_url_signer
-
 ## Usage
 
-TODO: Write usage instructions here
+    private_key = "my-private-key-here"
+    url = "http://maps.googleapis.com/maps/api/geocode/json?address=New+York&sensor=false&client=clientID"
+    GoogleBusinessApiUrlSigner.add_signature(url, private_key)
+    => "http://maps.googleapis.com/maps/api/geocode/json?address=New+York&sensor=false&client=clientID&signature=KrU1TzVQM7Ur0i8i7K3huiw3MsA="
 
 ## Contributing
 
