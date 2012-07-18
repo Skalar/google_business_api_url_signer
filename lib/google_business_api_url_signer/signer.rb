@@ -5,15 +5,22 @@ module GoogleBusinessApiUrlSigner
   class Signer
     attr_reader :url, :private_key
 
+    # Public: Initializes the signer
+    #
+    # options   - Both url and private_key must be given within the options
+    #
     def initialize(options = {})
       @url = options.fetch :url
       @private_key = options.fetch :private_key
     end
 
+
+    # Public: Calculates the signature from the given URL and private key
     def signature
       Base64.encode64(signature_digest).tr('+/', '-_').chomp
     end
 
+    # Public: Calculates the signature and returns a signed version of the URL
     def signed_url
       [
         parsed_url.scheme,
