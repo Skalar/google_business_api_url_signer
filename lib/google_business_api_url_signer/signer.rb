@@ -2,6 +2,11 @@ require 'base64'
 require 'openssl'
 
 module GoogleBusinessApiUrlSigner
+  # Public: Takes care of signing URLs
+  #
+  # Google's documentation for this can be found here:
+  # https://developers.google.com/maps/documentation/business/webservices#generating_valid_signatures
+  #
   class Signer
     BASE_64_DECODE_ENCODE_REPLACEMENTS = ['-_', '+/']
 
