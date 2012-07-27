@@ -17,6 +17,7 @@ describe GoogleBusinessApiUrlSigner::Signer do
   its(:private_key) { should eq private_key }
   its(:signature) { should eq signature }
   its(:signed_url) { should eq signed_url }
+  its(:signed_url) { should be_html_safe }
 
   it "ensures that the URL contains a client id" do
     expect {

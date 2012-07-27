@@ -46,7 +46,7 @@ module GoogleBusinessApiUrlSigner
         parsed_url.path,
         '?',
         query_params_as_string_with_signature
-      ].join
+      ].join.html_safe
     end
 
 
