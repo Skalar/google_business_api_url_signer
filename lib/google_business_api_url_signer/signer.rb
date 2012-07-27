@@ -11,7 +11,9 @@ module GoogleBusinessApiUrlSigner
     BASE_64_DECODE_ENCODE_REPLACEMENTS = ['-_', '+/']
 
     cattr_accessor :default_private_key
-    attr_reader :url, :private_key
+    self.default_private_key = ''
+
+    attr_reader :url
 
     # Public: Initializes the signer
     #
@@ -22,8 +24,13 @@ module GoogleBusinessApiUrlSigner
     def initialize(options = {})
       @url = options.fetch :url
       @private_key = options.fetch :private_key, default_private_key
+      @private_key = default_private_key if @private_key.blank?
     end
 
+    def private_key
+      return @private_key if @private_key.present?
+      fail MissingPrivateKeyError
+    end
 
     # Public: Calculates the signature from the given URL and private key
     def signature
