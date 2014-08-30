@@ -8,8 +8,6 @@ module GoogleBusinessApiUrlSigner
   # https://developers.google.com/maps/documentation/business/webservices#generating_valid_signatures
   #
   class Signer
-    BASE_64_DECODE_ENCODE_REPLACEMENTS = ['-_', '+/']
-
     cattr_accessor :default_private_key
     self.default_private_key = ''
 
@@ -34,7 +32,7 @@ module GoogleBusinessApiUrlSigner
 
     # Public: Calculates the signature from the given URL and private key
     def signature
-      Base64.encode64(signature_digest).tr(*BASE_64_DECODE_ENCODE_REPLACEMENTS.reverse).chomp
+      Base64.urlsafe_encode64 signature_digest
     end
 
     # Public: Calculates the signature and returns a signed version of the URL
@@ -56,7 +54,7 @@ module GoogleBusinessApiUrlSigner
     def signature_digest
       OpenSSL::HMAC.digest(
         OpenSSL::Digest.new('sha1'),
-        private_key_decoded, 
+        private_key_decoded,
         path_and_query
       )
     end
@@ -97,7 +95,7 @@ module GoogleBusinessApiUrlSigner
 
 
     def private_key_decoded
-      Base64.decode64 private_key.tr(*BASE_64_DECODE_ENCODE_REPLACEMENTS)
+      Base64.urlsafe_decode64 private_key
     end
   end
 end

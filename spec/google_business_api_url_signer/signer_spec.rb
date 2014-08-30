@@ -44,14 +44,14 @@ describe GoogleBusinessApiUrlSigner::Signer do
     it "uses default private key when set" do
       described_class.default_private_key = 'default'
 
-      Base64.should_receive(:decode64).with('default').and_return 'decoded'
+      Base64.should_receive(:urlsafe_decode64).with('default').and_return 'decoded'
       described_class.new(url: url).signature
     end
 
     it "uses the private key when options are filled with a blank private key" do
       described_class.default_private_key = 'default'
 
-      Base64.should_receive(:decode64).with('default').and_return 'decoded'
+      Base64.should_receive(:urlsafe_decode64).with('default').and_return 'decoded'
       described_class.new(url: url, private_key: nil).signature
     end
   end
