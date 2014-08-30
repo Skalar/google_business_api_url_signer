@@ -2,6 +2,8 @@
 
 Signs URLs used to call Google's business APIs.
 
+[![Build Status](https://travis-ci.org/Skalar/google_business_api_url_signer.svg?branch=master)](https://travis-ci.org/Skalar/google_business_api_url_signer)
+
 ## Installation
 
 Add this line to your application's Gemfile:
