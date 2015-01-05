@@ -13,11 +13,25 @@ describe GoogleBusinessApiUrlSigner::Signer do
     )
   end
 
-  its(:url) { should eq url }
-  its(:private_key) { should eq private_key }
-  its(:signature) { should eq signature }
-  its(:signed_url) { should eq signed_url }
-  its(:signed_url) { should be_html_safe }
+  it "has expected URL" do
+    expect(subject.url).to eq url
+  end
+
+  it "has expected private key" do
+    expect(subject.private_key).to eq private_key
+  end
+
+  it "has expected signature" do
+    expect(subject.signature).to eq signature
+  end
+
+  it "has expected signed url" do
+    expect(subject.signed_url).to eq signed_url
+  end
+
+  it "has expected signed url to be HTML safe" do
+    expect(subject.signed_url).to be_html_safe
+  end
 
   it "ensures that the URL contains a client id" do
     expect {
@@ -44,14 +58,14 @@ describe GoogleBusinessApiUrlSigner::Signer do
     it "uses default private key when set" do
       described_class.default_private_key = 'default'
 
-      Base64.should_receive(:urlsafe_decode64).with('default').and_return 'decoded'
+      expect(Base64).to receive(:urlsafe_decode64).with('default').and_return 'decoded'
       described_class.new(url: url).signature
     end
 
     it "uses the private key when options are filled with a blank private key" do
       described_class.default_private_key = 'default'
 
-      Base64.should_receive(:urlsafe_decode64).with('default').and_return 'decoded'
+      expect(Base64).to receive(:urlsafe_decode64).with('default').and_return 'decoded'
       described_class.new(url: url, private_key: nil).signature
     end
   end
