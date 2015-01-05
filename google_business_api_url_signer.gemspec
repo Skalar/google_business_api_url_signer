@@ -16,6 +16,6 @@ Gem::Specification.new do |gem|
   gem.version       = GoogleBusinessApiUrlSigner::VERSION
 
   gem.add_dependency "activesupport", [">= 3.2.0", "< 4.2"]
-  gem.add_development_dependency "rspec", "2.11.0"
+  gem.add_development_dependency "rspec", "3.1.0"
   gem.add_development_dependency "rake"
 end
